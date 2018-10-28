@@ -1,0 +1,16 @@
+{
+    "name": "geek/emplo-list",
+    "type": "project",
+    "authors": [
+        {
+            "name": "GeraldasK",
+            "email": "gerk.kasp@icloud.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Classes\\" : "Classes"
+        }
+    }
+}
