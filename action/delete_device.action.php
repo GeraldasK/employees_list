@@ -5,8 +5,9 @@ use Classes\devices;
 
 if(isset($_POST['delete'])){
     $devices = new devices();
-    $devices->deleteDevice($_POST['id']);
-    $_SESSION['message'] = "Irenginys istrintas";
+    $id = htmlspecialchars($_POST['id']);
+    $devices->deleteDevice($id);
+    $_SESSION['message'] = "Įrenginys ištrintas";
     header("Location: ../dashboard.php");
 }else{
     header("Location: ../dashboard.php");

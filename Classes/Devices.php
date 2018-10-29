@@ -11,7 +11,7 @@ class Devices extends Db
     private $device_code;
     private $id;
 
-    public function setDevices(array $data){
+    public function setDevices($data){
         $this->device_category = $data['device_category'];
         $this->device_name = $data['device_name']." ".$data['device_code'];
         $this->device_code = $data['device_code'];
@@ -42,13 +42,13 @@ class Devices extends Db
     }
 
     // pasiemu viena irengini is duomenu bazes 
-    protected function getOneDevice($id){
+    public function getOneDevice($id){
         $sql="SELECT devices.device_name FROM devices LEFT JOIN employees_devices ON devices.id = employees_devices.deviceId WHERE employees_devices.employeeId = '$id'";
         $result = $this->query($sql)->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
-    protected function getDevices(){
+    public function getDevices(){
         $sql = "SELECT * FROM devices ORDER BY device_category";
         $result = $this->query($sql)->fetchALL(PDO::FETCH_ASSOC);
         return $result;

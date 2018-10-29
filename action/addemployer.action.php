@@ -9,7 +9,7 @@ if(isset($_POST['add_employer'])){
         $employees->setEmployees($data);
         $employees->storeEmployees();
     }else{
-        $_SESSION['message'] = "Full name laukelis privalomas";
+        $_SESSION['message'] = "Darbuotojo vardo laukelis privalomas";
             header("Location: ../dashboard.php");
     }
 }

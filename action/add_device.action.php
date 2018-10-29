@@ -9,7 +9,7 @@ if(isset($_POST['add_device'])){
         $devices->setDevices($data);
         $devices->storeDevices();
     }else{
-        $_SESSION['message'] = "Device name and device code fields must be filled in";
+        $_SESSION['message'] = "Nepalikite tuščių laukelių";
             header("Location: ../dashboard.php");
     }
 }

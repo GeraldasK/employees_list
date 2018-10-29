@@ -1,7 +1,7 @@
 <?php session_start();
 require "vendor/autoload.php";
-use Classes\DevicesController;
-use Classes\EmployeesController;
+use Classes\Devices;
+use Classes\EmployeesPagination;
 
 if(!isset($_SESSION['user'])){
     header("Location: login.php");
@@ -17,61 +17,59 @@ if(!isset($_SESSION['user'])){
 <main>
     <section class="container-fluid">
     <?php if (isset($_SESSION['message'])): ?>
-        <div class="alert alert-danger text-center">
+        <div class="alert alert-primary text-center">
             <?php   echo $_SESSION['message']; 
             unset($_SESSION['message']);?>
         </div>
     <?php endif; ?>
         <div class="row">
             <div class="col-sm-3">
-            <div>
-            <form action="action/addemployer.action.php" method="POST" class="jumbotron">
+                <form action="action/addemployer.action.php" method="POST" class="jumbotron">
                 <h3 class="pb-3">Add employer</h3>
-                <div class="form-group">
-                    <label for="full_name">Full Name</label>
-                    <input type="text" name="full_name" class="form-control" id="full_name" placeholder="Enter your full name">
-                </div>
-                <div class="form-group">
-                    <label for="birth_date">Date of birth</label>
-                    <input type="date" name="birth_date" class="form-control" id="email" placeholder="Enter your birth date">
-                </div>
-                <div class="form-group">
-                    <label for="city">Your city</label>
-                    <input type="text" name="city" class="form-control" id="city" placeholder="Enter your city">
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone number</label>
-                    <input type="text" name="phone_number" class="form-control" id="phone" placeholder="Enter phone number">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email address</label>
-                    <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
-                </div>
-                <button type="submit" name="add_employer" class="btn btn-primary">Submit</button>
-            </form>
-            </div>
-            <form class="jumbotron" action="action/employees_devices.action.php" method="POST">
-           <h3 class="pb-3">Add device for employee </h3>
-                <div class="form-group">
-                    <label for="device">Select Employee</label>
-                    <select class="form-control" name="employeeId" id="device">
-                    <?php $employees = new EmployeesController();
-                        foreach($employees->showAllEmployees() as $employee):?>
-                        <option value="<?php echo $employee['id'];?>"><?php echo $employee['full_name'];?></option>
-                    <?php endforeach;?>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="device">Select device</label>
-                    <select class="form-control" name="deviceId" id="device">
-                    <?php $devices = new DevicesController();
-                        foreach($devices->showDevices() as $device):?>
-                        <option value="<?php echo $device['id'];?>"><?php echo $device['device_name'];?></option>
-                    <?php endforeach;?>
-                    </select>
-                </div>
-                <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-            </form>
+                    <div class="form-group">
+                        <label for="full_name">Full Name</label>
+                        <input type="text" name="full_name" class="form-control" id="full_name" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="birth_date">Date of birth</label>
+                        <input type="date" name="birth_date" class="form-control" id="email" placeholder="Enter your birth date">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Your city</label>
+                        <input type="text" name="city" class="form-control" id="city" placeholder="Enter your city">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone number</label>
+                        <input type="text" name="phone_number" class="form-control" id="phone" placeholder="Enter phone number">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
+                    </div>
+                    <button type="submit" name="add_employer" class="btn btn-primary">Submit</button>
+                </form>
+                <form class="jumbotron" action="action/employees_devices.action.php" method="POST">
+                <h3 class="pb-3">Add device for employee </h3>
+                    <div class="form-group">
+                        <label for="device">Select Employee</label>
+                        <select class="form-control" name="employeeId" id="device">
+                        <?php $employees = new EmployeesPagination();
+                            foreach($employees->getAllEmployees() as $employee):?>
+                            <option value="<?php echo $employee['id'];?>"><?php echo $employee['full_name'];?></option>
+                        <?php endforeach;?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="device">Select device</label>
+                        <select class="form-control" name="deviceId" id="device">
+                        <?php $devices = new Devices();
+                            foreach($devices->getDevices() as $device):?>
+                            <option value="<?php echo $device['id'];?>"><?php echo $device['device_name'];?></option>
+                        <?php endforeach;?>
+                        </select>
+                    </div>
+                    <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
             <div class="col-sm-8">
                 <table class="table text-center">
@@ -89,7 +87,8 @@ if(!isset($_SESSION['user'])){
                     </thead>
                     <?php
                         if(isset($_GET['page'])){
-                            $start_point = $employees->getStartPoint($_GET['page']);
+                            $page=htmlspecialchars($_GET['page']);
+                            $start_point = $employees->getStartPoint($page);
                         }else{
                             $start_point = 1;
                         }
@@ -104,8 +103,8 @@ if(!isset($_SESSION['user'])){
                             <td>
                                 <ul>
                                     <?php
-                                    $devices = new DevicesController();
-                                    foreach($devices->showOneDevice($employee['id']) as $device):?>
+                                    $devices = new Devices();
+                                    foreach($devices->getOneDevice($employee['id']) as $device):?>
                                     <li><?php echo $device['device_name'];?></li>
                                     <?php endforeach;?>
                                 </ul>
@@ -168,7 +167,7 @@ if(!isset($_SESSION['user'])){
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
-                    <?php foreach($devices->showDevices() as $device):?>
+                    <?php foreach($devices->getDevices() as $device):?>
                     <tbody>
                         <tr>
                             <td><?php echo $device['device_category'];?></td>

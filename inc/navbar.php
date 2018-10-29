@@ -7,7 +7,7 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#devices">Devices</a>
+            <a class="nav-link" href="#devices">Devices<span class="sr-only">(current)</span></a>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0" action="action/logout.action.php" method="POST">

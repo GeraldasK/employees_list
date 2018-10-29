@@ -1,7 +1,6 @@
 <?php
 namespace Classes;
 use Classes\Database\Db;
-// use Classes\Database\Db;
 
 class Users extends Db
 {
@@ -21,7 +20,7 @@ class Users extends Db
 
     public function logUser(){
         if($this->checkUser() > 0 ){
-            $_SESSION['message'] = "Sveiki, Jus esate prisijunges";
+            $_SESSION['message'] = "Sveiki, Jūs esate prisijungęs";
             $_SESSION['user'] = $this->email;
             header("Location: ../dashboard.php");
         }else{

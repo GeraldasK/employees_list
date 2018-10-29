@@ -2,7 +2,6 @@
 session_start();
 require "vendor/autoload.php";
 use Classes\Users;
-$users = new Users();
 ?>
 <?php include_once 'inc/header.php'?>
 <main class="container">
@@ -12,7 +11,6 @@ $users = new Users();
             unset($_SESSION['message']);?>
         </div>
 <?php endif; ?>
-<?php //echo $users->checkUser('admin@gmail.com', 'admin123');?>
     <section class="text-center mt-5">
         <form class="form-signin" action="action/login.action.php" method="POST">
             <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>

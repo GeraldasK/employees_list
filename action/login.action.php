@@ -9,6 +9,6 @@ if(isset($_POST['submit'])){
     $users->setUser($data['email'], $data['password']);
     $users->logUser();
 }else{
-
+    header("Location: ../login.php")
 }
 ?>

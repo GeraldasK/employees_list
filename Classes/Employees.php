@@ -59,8 +59,8 @@ class Employees extends Db
     }
 
     
-    protected function getAllEmployees(){
-        $sql="SELECT *
+    public function getAllEmployees(){
+        $sql="SELECT id, full_name
         FROM employees ORDER BY full_name";
         $result = $this->query($sql)->fetchAll(PDO::FETCH_ASSOC);
         return $result;

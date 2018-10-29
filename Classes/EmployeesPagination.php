@@ -3,15 +3,11 @@ namespace Classes;
 
 use Classes\Employees;
 
-class EmployeesController extends Employees
+class EmployeesPagination extends Employees
 {
     private $result_per_pages = 12;
     private $number_of_result;
 
-    public function showAllEmployees(){
-        $result = $this->getAllEmployees();
-        return $result;
-    }
     
     public function showEmployees($param1){
         $this->employeesPerPage();

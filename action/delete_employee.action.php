@@ -5,7 +5,8 @@ use Classes\Employees;
 
 if(isset($_POST['delete'])){
     $employees = new Employees();
-    $employees->deleteEmployee($_POST['id']);
+    $id = htmlspecialchars($_POST['id']);
+    $employees->deleteEmployee($id);
     $_SESSION['message'] = "Darbuotojas istrintas";
     header("Location: ../dashboard.php");
 }else{
